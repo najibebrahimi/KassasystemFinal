@@ -2,16 +2,9 @@
 
 namespace Kassasystem
 {
-    struct Produkt
-    {
-        public string command;
-        public string name;
-        public double pris;
-        public string unit;
-    }
     struct Shop
     {
-        public Produkt produkt;
+        public Product produkt;
         public int amount;
     }
     internal partial class Program
@@ -42,62 +35,62 @@ namespace Kassasystem
         }
 
         static void NewCustomer()
-        {
-            Produkt[] list = CreateTextFile();
+        { 
+            List<Product> listOfProducts = CreateTextFile();
 
-            List<Shop> list2 = new List<Shop>();
+            List<Shop> shoppingList = new List<Shop>();
             do
             {
                 Console.Clear();
                 
-                foreach (var item in list2)
+                foreach (var item in shoppingList)
                 {
-                    Console.WriteLine(item.amount + " x " + item.produkt.name + ": " + (item.produkt.pris * item.amount));
+                    Console.WriteLine(item.amount + " x " + item.produkt.Name + ": " + (item.produkt.Price * item.amount));
                 }
                 Console.WriteLine("kommando\n<productid> <amount>\npay");
                 string komman = Console.ReadLine();
 
                 if (komman == "pay") break;
 
-                string[] gamma = komman.Split(' ');
+                string[] parts = komman.Split(' ');
 
 
-                foreach (Produkt item in list)
+                foreach (Product product in listOfProducts)
                 {
-                    if (item.command == gamma[0])
+                    if (product.ProductId == int.Parse(parts[0]))
                     {
                         Shop p = new Shop();
-                        p.produkt = item;
-                        p.amount = Int32.Parse(gamma[1]);
-                        list2.Add(p);
+                        p.produkt = product;
+                        p.amount = Int32.Parse(parts[1]);
+                        shoppingList.Add(p);
                     }
                 }
 
             } while (true); 
 
-            Kvitto(list2.ToArray());
+            Kvitto(shoppingList.ToArray());
         }
 
-        static Produkt[] CreateTextFile()
+       
+        static List<Product> CreateTextFile()
         {
-            
             string[] list = File.ReadAllLines("../../../products.txt");
+
+            List<Product> listOfProducts = new List<Product>();
             
-
-            Produkt[] p = new Produkt[list.Length];
             int i = 0;
-            foreach (string s in list)
+            foreach (string line in list)
             {
-                string[] line = s.Split(',');
-                Produkt pr = new Produkt();
-                pr.command = line[0].ToString();
-                pr.name = line[1].ToString();
-                pr.pris = double.Parse(line[2].ToString());
-                pr.unit = line[3].ToString();
+                string[] parts = line.Split(',');
+                Product product = new Product();
+                product.ProductId = int.Parse(parts[0].ToString());
+                product.Name = parts[1].ToString();
+                product.Price = double.Parse(parts[2].ToString());
+                product.PriceType = parts[3].ToString();
 
-                p[i++] = pr;
+                listOfProducts.Add(product);
             }
-            return p;
+            return listOfProducts;
         }
 
         static void Kvitto(Shop[] list)
@@ -112,9 +105,9 @@ namespace Kassasystem
                 {
                     
                     {
-                        writer.WriteLine(item.amount + " x " + item.produkt.name + ": " + (item.produkt.pris * item.amount));
+                        writer.WriteLine(item.amount + " x " + item.produkt.Name + ": " + (item.produkt.Price * item.amount));
                         
-                        totalPris += (int)(item.produkt.pris * item.amount);
+                        totalPris += (int)(item.produkt.Price * item.amount);
                     }
                 }
                 
