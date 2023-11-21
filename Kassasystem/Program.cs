@@ -2,8 +2,12 @@
 
 namespace Kassasystem
 {
+    // Istället för en struct 
+    // skapa en klass i en ny fil
+    //"ShopItem"
     struct Shop
     {
+        // Byt ut till properties
         public Product produkt;
         public int amount;
     }
@@ -11,32 +15,13 @@ namespace Kassasystem
     {
         static void Main(string[] args)
         {
-            MainMenu();
+            Menu.MainMenu();
         }
 
-        static void MainMenu()
-        {
-            string myOptions;
-            do
-            {
-                Console.Clear();
-                Console.WriteLine("Welcome to my app!");
-                Console.WriteLine("Option 1. New customer");
-                Console.WriteLine("Option 0. exit");
-                myOptions = Console.ReadLine();
-                switch (myOptions)
-                {
-                    case "1":
-                        NewCustomer();
-                        break;
-                }
-
-            } while (myOptions != "0");
-        }
-
-        static void NewCustomer()
+        // Bryta ut till en ny class kanske "CustomerHandler"
+        public static void NewCustomer()
         { 
-            List<Product> listOfProducts = CreateTextFile();
+            List<Product> listOfProducts = GetProducts();
 
             List<Shop> shoppingList = new List<Shop>();
             do
@@ -68,11 +53,11 @@ namespace Kassasystem
 
             } while (true); 
 
-            Kvitto(shoppingList.ToArray());
+            CreateReceipt(shoppingList.ToArray());
         }
 
-       
-        static List<Product> CreateTextFile()
+       // Skapa en klass "ProductHandler"
+        static List<Product> GetProducts()
         {
             string[] list = File.ReadAllLines("../../../products.txt");
 
@@ -93,9 +78,9 @@ namespace Kassasystem
             return listOfProducts;
         }
 
-        static void Kvitto(Shop[] list)
+        // Skapa ReceiptHandler klass
+        static void CreateReceipt(Shop[] list)
         {
-            
             int totalPris = 0;
             using (var writer = new StreamWriter($"../../../receipt{DateTime.Today.ToString("d")}.txt"))
             {
