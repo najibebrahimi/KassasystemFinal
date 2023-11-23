@@ -1,0 +1,13 @@
+
+
+Kvitto 2023-11-23 18:48:57
+1 x Banan: 50
+50
+Kvitto 2023-11-23 18:50:02
+2 x Banan: 100
+2 x Äpple: 120
+220
+Kvitto 2023-11-23 18:53:57
+2 x Banan: 100
+1 x Äpple: 60
+Total: 160

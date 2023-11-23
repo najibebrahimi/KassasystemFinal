@@ -17,13 +17,14 @@ namespace Kassasystem
                 Console.WriteLine("Welcome to my app!");
                 Console.WriteLine("Option 1. New customer");
                 Console.WriteLine("Option 0. exit");
+                Console.Write("Option: ");
                 myOptions = Console.ReadLine();
                 switch (myOptions)
                 {
                     case "1":
                         // Istället för att anropa program så kan man anropa CustomerHandler klassen
-                        Program.NewCustomer();
-                        //CustomerHandler.NewCustomer();
+                        //Program.NewCustomer();
+                        CustomerHandler.NewCustomer();
                         break;
                 }
 
