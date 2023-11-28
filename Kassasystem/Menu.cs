@@ -22,8 +22,6 @@ namespace Kassasystem
                 switch (myOptions)
                 {
                     case "1":
-                        // Istället för att anropa program så kan man anropa CustomerHandler klassen
-                        //Program.NewCustomer();
                         CustomerHandler.NewCustomer();
                         break;
                 }
